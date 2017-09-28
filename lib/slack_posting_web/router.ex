@@ -20,7 +20,9 @@ defmodule SlackPostingWeb.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", SlackPostingWeb do
-  #   pipe_through :api
-  # end
+   scope "/api", SlackPostingWeb do
+     pipe_through :api
+     resources "/comments", CommentController, except: [:new, :edit]
+     resources "/posts", PostController, except: [:new, :edit]
+   end
 end
