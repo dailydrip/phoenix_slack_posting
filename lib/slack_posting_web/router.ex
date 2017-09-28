@@ -1,5 +1,6 @@
 defmodule SlackPostingWeb.Router do
   use SlackPostingWeb, :router
+  use ExAdmin.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -25,4 +26,11 @@ defmodule SlackPostingWeb.Router do
      resources "/comments", CommentController, except: [:new, :edit]
      resources "/posts", PostController, except: [:new, :edit]
    end
+
+
+  # your app's routes
+  scope "/admin", ExAdmin do
+    pipe_through :browser
+    admin_routes()
+  end
 end

@@ -22,6 +22,19 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+
+config :ex_admin,
+  repo: SlackPosting.Repo,
+  module: SlackPosting,    # MyProject.Web for phoenix >= 1.3.0-rc
+  modules: [
+    SlackPosting.ExAdmin.Dashboard,
+    SlackPosting.ExAdmin.Post
+  ]
+
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"
+
+config :xain, :after_callback, {Phoenix.HTML, :raw}
+
