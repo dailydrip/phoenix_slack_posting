@@ -31,6 +31,13 @@ config :ex_admin,
     SlackPosting.ExAdmin.Post
   ]
 
+config :papersist,
+  slack_irc_password: System.get_env("SLACK_IRC_PASSWORD"),
+  slack_nick: System.get_env("SLACK_NICK"),
+  slack_user: System.get_env("SLACK_USER"),
+  slack_name: System.get_env("SLACK_NAME"),
+  slack_channel: System.get_env("SLACK_CHANNEL"),
+
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
