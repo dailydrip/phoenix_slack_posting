@@ -37,6 +37,8 @@ config :papersist,
   slack_user: System.get_env("SLACK_USER"),
   slack_name: System.get_env("SLACK_NAME"),
   slack_channel: System.get_env("SLACK_CHANNEL"),
+  slack_url: System.get_env("SLACK_URL"),
+  slack_port: System.get_env("SLACK_PORT")
 
 
 # Import environment specific config. This must remain at the bottom

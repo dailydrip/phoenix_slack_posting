@@ -3,8 +3,8 @@ defmodule Papersist.Bot do
   require Logger
 
   defmodule State do
-    defstruct server:  "dailydrip.irc.slack.com",
-              port:    6667,
+    defstruct server:  Application.get_env(:papersist, :slack_url),
+              port:    Application.get_env(:papersist, :slack_port),
               pass:    Application.get_env(:papersist, :slack_irc_password),
               nick:    Application.get_env(:papersist, :slack_nick),
               user:    Application.get_env(:papersist, :slack_user),
