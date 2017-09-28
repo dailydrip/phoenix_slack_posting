@@ -8,5 +8,6 @@ defmodule SlackPostingWeb.Router do
   scope "/api", SlackPostingWeb do
     pipe_through :api
     resources "/posts", PostController, except: [:new, :edit]
+    resources "/comments", CommentController, except: [:new, :edit]
   end
 end
