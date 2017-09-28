@@ -14,6 +14,8 @@ defmodule SlackPostingWeb.Endpoint do
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.
   if code_reloading? do
+    socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
+    plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
   end
 
@@ -34,7 +36,7 @@ defmodule SlackPostingWeb.Endpoint do
   plug Plug.Session,
     store: :cookie,
     key: "_slack_posting_key",
-    signing_salt: "13cc5tn4"
+    signing_salt: "jbc76H1N"
 
   plug SlackPostingWeb.Router
 

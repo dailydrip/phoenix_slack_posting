@@ -12,8 +12,8 @@ config :slack_posting,
 # Configures the endpoint
 config :slack_posting, SlackPostingWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "Sf77RKgXlwGkMRGN4tAYeWSi02GUF/Hl1A9HDkmSzvUVeWl5UT6D4dOsJ1QD0VgP",
-  render_errors: [view: SlackPostingWeb.ErrorView, accepts: ~w(json)],
+  secret_key_base: "/wMEvNXnbSEJIuyf9l0z0/IvkOV0n2Wg8FjSrGKxy6AAD3X9ThGhLPY0wN4PzsYD",
+  render_errors: [view: SlackPostingWeb.ErrorView, accepts: ~w(html json)],
   pubsub: [name: SlackPosting.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
