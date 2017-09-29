@@ -25,6 +25,7 @@ defmodule SlackPostingWeb.Router do
      pipe_through :api
      resources "/comments", CommentController, except: [:new, :edit]
      resources "/posts", PostController, except: [:new, :edit]
+     resources "/tags", TagController, except: [:new, :edit]
    end
 
 

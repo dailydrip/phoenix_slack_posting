@@ -6,7 +6,12 @@ defmodule SlackPosting.Journals do
   import Ecto.Query, warn: false
   alias SlackPosting.Repo
 
-  alias SlackPosting.Journals.Post
+  alias SlackPosting.Journals.{
+    Post,
+    Tag,
+    Comment,
+    PostTag
+  }
 
   @doc """
   Returns the list of posts.
@@ -19,6 +24,7 @@ defmodule SlackPosting.Journals do
   """
   def list_posts do
     Repo.all(Post)
+    |> Repo.preload([:comments, :tags])
   end
 
   @doc """
@@ -102,7 +108,6 @@ defmodule SlackPosting.Journals do
     Post.changeset(post, %{})
   end
 
-  alias SlackPosting.Journals.Comment
 
   @doc """
   Returns the list of comments.
@@ -197,4 +202,142 @@ defmodule SlackPosting.Journals do
   def change_comment(%Comment{} = comment) do
     Comment.changeset(comment, %{})
   end
+
+  @doc """
+  Returns the list of tags.
+
+  ## Examples
+
+      iex> list_tags()
+      [%Tag{}, ...]
+
+  """
+  def list_tags do
+    Repo.all(Tag)
+  end
+
+  @doc """
+  Gets a single tag.
+
+  Raises `Ecto.NoResultsError` if the Tag does not exist.
+
+  ## Examples
+
+      iex> get_tag!(123)
+      %Tag{}
+
+      iex> get_tag!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_tag!(id), do: Repo.get!(Tag, id)
+
+  @doc """
+  Creates a tag.
+
+  ## Examples
+
+      iex> create_tag(%{field: value})
+      {:ok, %Tag{}}
+
+      iex> create_tag(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_tag(attrs \\ %{}) do
+    %Tag{}
+    |> Tag.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def find_tag_by_name(name) do
+    SlackPosting.Repo.get_by(Tag, name: name)
+  end
+
+  def find_or_create_tag_by_name(name) do
+    case find_tag_by_name(name) do
+      nil ->
+        create_tag(%{name: name})
+      t -> t
+    end
+  end
+
+  @doc """
+  Updates a tag.
+
+  ## Examples
+
+      iex> update_tag(tag, %{field: new_value})
+      {:ok, %Tag{}}
+
+      iex> update_tag(tag, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_tag(%Tag{} = tag, attrs) do
+    tag
+    |> Tag.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a Tag.
+
+  ## Examples
+
+      iex> delete_tag(tag)
+      {:ok, %Tag{}}
+
+      iex> delete_tag(tag)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_tag(%Tag{} = tag) do
+    Repo.delete(tag)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking tag changes.
+
+  ## Examples
+
+      iex> change_tag(tag)
+      %Ecto.Changeset{source: %Tag{}}
+
+  """
+  def change_tag(%Tag{} = tag) do
+    Tag.changeset(tag, %{})
+  end
+
+  @doc """
+  Returns the list of tags.
+
+  ## Examples
+
+      iex> list_post_tags()
+      [%PostTag{}, ...]
+
+  """
+  def list_post_tags do
+    Repo.all(PostTag)
+  end
+
+  @doc """
+  Creates a post_tag.
+
+  ## Examples
+
+      iex> create_post_tag(%{field: value})
+      {:ok, %PostTag{}}
+
+      iex> create_post_tag(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_post_tag(attrs \\ %{}) do
+    %PostTag{}
+    |> PostTag.changeset(attrs)
+    |> Repo.insert()
+  end
+
 end
