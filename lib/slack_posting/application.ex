@@ -14,6 +14,7 @@ defmodule SlackPosting.Application do
       supervisor(SlackPostingWeb.Endpoint, []),
       # Start your own worker by calling: SlackPosting.Worker.start_link(arg1, arg2, arg3)
       # worker(SlackPosting.Worker, [arg1, arg2, arg3]),
+      worker(SlackPosting.Robot, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

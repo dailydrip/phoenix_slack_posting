@@ -20,7 +20,7 @@ defmodule SlackPosting.Mixfile do
   def application do
     [
       mod: {SlackPosting.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :hedwig_slack]
     ]
   end
 
@@ -42,7 +42,8 @@ defmodule SlackPosting.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:ex_admin, github: "smpallen99/ex_admin"},
-      { :exirc, github: "bitwalker/exirc" }
+      { :exirc, github: "bitwalker/exirc" },
+      {:hedwig_slack, "~> 1.0"}
     ]
   end
 

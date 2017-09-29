@@ -31,15 +31,26 @@ config :ex_admin,
     SlackPosting.ExAdmin.Post
   ]
 
-config :papersist,
-  slack_irc_password: System.get_env("SLACK_IRC_PASSWORD"),
-  slack_nick: System.get_env("SLACK_NICK"),
-  slack_user: System.get_env("SLACK_USER"),
-  slack_name: System.get_env("SLACK_NAME"),
-  slack_channel: System.get_env("SLACK_CHANNEL"),
-  slack_url: System.get_env("SLACK_URL"),
-  slack_port: System.get_env("SLACK_PORT")
+  ###
+  #config :papersist,
+  #  slack_irc_password: System.get_env("SLACK_IRC_PASSWORD"),
+  #  slack_nick: System.get_env("SLACK_NICK"),
+  #  slack_user: System.get_env("SLACK_USER"),
+  #  slack_name: System.get_env("SLACK_NAME"),
+  #  slack_channel: System.get_env("SLACK_CHANNEL"),
+  #  slack_url: System.get_env("SLACK_URL"),
+  #  slack_port: System.get_env("SLACK_PORT")
 
+config :slack_posting, SlackPosting.Robot,
+  adapter: Hedwig.Adapters.Slack,
+  name: "alfred",
+  aka: "/",
+  token: System.get_env("SLACK_TOKEN"),
+  rooms: ["#cool-links"],
+  responders: [
+    {Hedwig.Responders.Help, []},
+    {Hedwig.Responders.Ping, []}
+  ]
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
