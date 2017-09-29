@@ -13,6 +13,8 @@ defmodule SlackPostingWeb.PostView do
   def render("post.json", %{post: post}) do
     %{id: post.id,
       text: post.text,
-      slack_id: post.slack_id}
+      user_slack_id: post.user_slack_id,
+      user_name: post.user_name
+    }
   end
 end

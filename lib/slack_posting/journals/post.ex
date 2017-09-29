@@ -5,7 +5,8 @@ defmodule SlackPosting.Journals.Post do
 
 
   schema "posts" do
-    field :slack_id, :string
+    field :user_slack_id, :string
+    field :user_name, :string
     field :text, :string
 
     timestamps()
@@ -14,7 +15,7 @@ defmodule SlackPosting.Journals.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:text, :slack_id])
-    |> validate_required([:text, :slack_id])
+    |> cast(attrs, [:text, :user_slack_id, :user_name])
+    |> validate_required([:text, :user_slack_id])
   end
 end

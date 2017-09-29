@@ -15,9 +15,13 @@ defmodule SlackPosting.Robot do
   end
 
   def handle_in(%Hedwig.Message{} = msg, state) do
-    text = msg.text
-    slack_id  = msg.user.id
-    create_post_if_necessary(text, slack_id)
+    post_information = SlackPosting.MessageParser.get_post_information(msg)
+    IEx.pry
+    SlackPosting.Journals.create_post(%{
+      text: post_information.message,
+      user_slack_id: post_information.user_slack_id,
+      user_name: post_information.user_name})
+
     {:dispatch, msg, state}
   end
 
@@ -25,9 +29,4 @@ defmodule SlackPosting.Robot do
     {:noreply, state}
   end
 
-  def create_post_if_necessary(text, slack_id) do
-    if String.contains?(text, "$") do
-      SlackPosting.Journals.create_post(%{text: text, slack_id: slack_id})
-    end
-  end
 end
