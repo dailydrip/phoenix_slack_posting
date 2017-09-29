@@ -6,7 +6,12 @@ defmodule SlackPosting.Journals do
   import Ecto.Query, warn: false
   alias SlackPosting.Repo
 
-  alias SlackPosting.Journals.Post
+  alias SlackPosting.Journals.{
+    Post,
+    Tag,
+    Comment,
+    PostTag
+  }
 
   @doc """
   Returns the list of posts.
@@ -19,6 +24,7 @@ defmodule SlackPosting.Journals do
   """
   def list_posts do
     Repo.all(Post)
+    |> Repo.preload([:comments, :tags])
   end
 
   @doc """
@@ -102,7 +108,6 @@ defmodule SlackPosting.Journals do
     Post.changeset(post, %{})
   end
 
-  alias SlackPosting.Journals.Comment
 
   @doc """
   Returns the list of comments.
@@ -198,8 +203,6 @@ defmodule SlackPosting.Journals do
     Comment.changeset(comment, %{})
   end
 
-  alias SlackPosting.Journals.Tag
-
   @doc """
   Returns the list of tags.
 
@@ -245,6 +248,18 @@ defmodule SlackPosting.Journals do
     %Tag{}
     |> Tag.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def find_tag_by_name(name) do
+    SlackPosting.Repo.get_by(Tag, name: name)
+  end
+
+  def find_or_create_tag_by_name(name) do
+    case find_tag_by_name(name) do
+      nil ->
+        create_tag(%{name: name})
+      t -> t
+    end
   end
 
   @doc """
@@ -293,4 +308,36 @@ defmodule SlackPosting.Journals do
   def change_tag(%Tag{} = tag) do
     Tag.changeset(tag, %{})
   end
+
+  @doc """
+  Returns the list of tags.
+
+  ## Examples
+
+      iex> list_post_tags()
+      [%PostTag{}, ...]
+
+  """
+  def list_post_tags do
+    Repo.all(PostTag)
+  end
+
+  @doc """
+  Creates a post_tag.
+
+  ## Examples
+
+      iex> create_post_tag(%{field: value})
+      {:ok, %PostTag{}}
+
+      iex> create_post_tag(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_post_tag(attrs \\ %{}) do
+    %PostTag{}
+    |> PostTag.changeset(attrs)
+    |> Repo.insert()
+  end
+
 end

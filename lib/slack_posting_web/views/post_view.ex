@@ -1,3 +1,4 @@
+require IEx
 defmodule SlackPostingWeb.PostView do
   use SlackPostingWeb, :view
   alias SlackPostingWeb.PostView
@@ -14,7 +15,15 @@ defmodule SlackPostingWeb.PostView do
     %{id: post.id,
       text: post.text,
       user_slack_id: post.user_slack_id,
-      user_name: post.user_name
+      user_name: post.user_name,
+      tags: Enum.map(post.tags, fn tag -> render("tag.json", %{tag: tag}) end)
+    }
+  end
+
+  def render("tag.json", %{tag: tag}) do
+    %{
+      id: tag.id,
+      name: tag.name
     }
   end
 end

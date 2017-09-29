@@ -7,6 +7,7 @@ defmodule SlackPosting.Journals.Tag do
   schema "tags" do
     field :name, :string
     field :post_id, :id
+    many_to_many :posts, SlackPosting.Journals.Post, join_through: SlackPosting.Journals.PostTag
 
     timestamps()
   end

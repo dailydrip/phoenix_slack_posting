@@ -3,11 +3,12 @@ defmodule SlackPosting.Journals.Post do
   import Ecto.Changeset
   alias SlackPosting.Journals.Post
 
-
   schema "posts" do
     field :user_slack_id, :string
     field :user_name, :string
     field :text, :string
+    many_to_many :tags, SlackPosting.Journals.Tag, join_through: SlackPosting.Journals.PostTag
+    has_many :comments, SlackPosting.Journals.Comment
 
     timestamps()
   end
