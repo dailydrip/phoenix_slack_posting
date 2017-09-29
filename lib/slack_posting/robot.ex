@@ -16,11 +16,11 @@ defmodule SlackPosting.Robot do
 
   def handle_in(%Hedwig.Message{} = msg, state) do
     post_information = SlackPosting.MessageParser.get_post_information(msg)
-    IEx.pry
-    SlackPosting.Journals.create_post(%{
+    {_, post} = SlackPosting.Journals.create_post(%{
       text: post_information.message,
       user_slack_id: post_information.user_slack_id,
       user_name: post_information.user_name})
+    Enum.map(post_information.tags, fn tag-> SlackPosting.Journals.create_tag(%{name: tag, post_id: post.id}) end)
 
     {:dispatch, msg, state}
   end
