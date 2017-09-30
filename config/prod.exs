@@ -35,6 +35,17 @@ config :slack_posting, SlackPosting.Repo,
   hostname: System.get_env("DB_HOSTNAME"),
   pool_size: 20
 
+config :slack_posting, SlackPosting.Robot,
+  adapter: Hedwig.Adapters.Slack,
+  name: "alfred",
+  aka: "/",
+  token: System.get_env("SLACK_TOKEN"),
+  rooms: ["#cool-links"],
+  responders: [
+    {Hedwig.Responders.Help, []},
+    {Hedwig.Responders.Ping, []}
+  ]
+
 # ## SSL Support
 #
 # To get SSL working, you will need to add the `https` key
