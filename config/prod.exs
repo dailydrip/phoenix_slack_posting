@@ -29,11 +29,11 @@ config :logger, level: :info
 # Configure your database
 config :slack_posting, SlackPosting.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
-  database: "slack_posting_dev",
-  hostname: "localhost",
-  pool_size: 10
+  username: System.get_env("DB_USERNAME"),
+  password: System.get_env("DB_PASSWORD"),
+  database: System.get_env("DB_DATABASE"),
+  hostname: System.get_env("DB_HOSTNAME"),
+  pool_size: 20
 
 # ## SSL Support
 #
