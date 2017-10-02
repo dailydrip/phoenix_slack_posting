@@ -24,7 +24,8 @@ defmodule SlackPosting.Mixfile do
         :logger,
         :runtime_tools,
         :hedwig_slack,
-        :exactor
+        :exactor,
+        :corsica
       ]
     ]
   end
@@ -47,9 +48,10 @@ defmodule SlackPosting.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:ex_admin, github: "smpallen99/ex_admin"},
-      #{:hedwig_slack, "~> 1.0"},
       {:hedwig_slack, github: "knewter/hedwig_slack", branch: "feature/debug_slack_on_deploy"},
       {:distillery, "~> 1.5", runtime: false}
+      {:plug, "~> 1.0"},
+      {:corsica, "~> 1.0"}
     ]
   end
 
