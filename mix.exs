@@ -4,7 +4,7 @@ defmodule SlackPosting.Mixfile do
   def project do
     [
       app: :slack_posting,
-      version: "0.0.1",
+      version: "0.0.11",
       elixir: "~> 1.4",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
@@ -20,7 +20,13 @@ defmodule SlackPosting.Mixfile do
   def application do
     [
       mod: {SlackPosting.Application, []},
-      extra_applications: [:logger, :runtime_tools, :hedwig_slack, :corsica]
+      extra_applications: [
+        :logger,
+        :runtime_tools,
+        :hedwig_slack,
+        :exactor,
+        :corsica
+      ]
     ]
   end
 
@@ -42,8 +48,8 @@ defmodule SlackPosting.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:ex_admin, github: "smpallen99/ex_admin"},
-      { :exirc, github: "bitwalker/exirc" },
       {:hedwig_slack, "~> 1.0"},
+      {:distillery, "~> 1.5", runtime: false},
       {:plug, "~> 1.0"},
       {:corsica, "~> 1.0"}
     ]
