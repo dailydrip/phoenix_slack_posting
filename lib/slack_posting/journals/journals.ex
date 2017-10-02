@@ -257,7 +257,8 @@ defmodule SlackPosting.Journals do
   def find_or_create_tag_by_name(name) do
     case find_tag_by_name(name) do
       nil ->
-        create_tag(%{name: name})
+        {:ok, t} = create_tag(%{name: name})
+        t
       t -> t
     end
   end
