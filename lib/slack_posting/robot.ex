@@ -18,14 +18,15 @@ defmodule SlackPosting.Robot do
   end
 
   def handle_in(%Hedwig.Message{} = msg, state) do
-    post_information = MessageParser.get_post_information(msg)
-    {_, post} = Journals.create_post(%{
-      text: post_information.message,
-      user_slack_id: post_information.user_slack_id,
-      user_name: post_information.user_name})
-    create_tags(post_information.tags, post)
-
-    {:dispatch, msg, state}
+    if String.contains?(msg.text, "$") do
+      post_information = MessageParser.get_post_information(msg)
+      {_, post} = Journals.create_post(%{
+        text: post_information.message,
+        user_slack_id: post_information.user_slack_id,
+        user_name: post_information.user_name})
+      create_tags(post_information.tags, post)
+    end
+      {:dispatch, msg, state}
   end
 
   def create_tags(tags, post) do
