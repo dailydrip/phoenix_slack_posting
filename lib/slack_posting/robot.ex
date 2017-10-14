@@ -1,3 +1,4 @@
+require IEx
 defmodule SlackPosting.Robot do
   use Hedwig.Robot, otp_app: :slack_posting
   alias SlackPosting.{
@@ -18,7 +19,9 @@ defmodule SlackPosting.Robot do
   end
 
   def handle_in(%Hedwig.Message{} = msg, state) do
+    IEx.pry
     if String.contains?(msg.text, "$") do
+      IEx.pry
       post_information = MessageParser.get_post_information(msg)
       {_, post} = Journals.create_post(%{
         text: post_information.message,
