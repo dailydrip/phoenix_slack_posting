@@ -19,11 +19,6 @@ defmodule SlackPosting.Robot do
     Cachex.set(:messages, post_information.slack_id, post_information)
 
     if Enum.any?(post_information.tags) do
-      unless post_information.message == "" do
-        {:ok, post} = create_post(post_information)
-        create_tags(post_information.tags, post)
-      end
-
       if post_information.in_reply_to_slack_id do
         case Journals.get_post_by_slack_id(post_information.in_reply_to_slack_id) do
           nil ->
@@ -50,6 +45,11 @@ defmodule SlackPosting.Robot do
                   {:ok, _comment} = create_comment(post, post_information)
                 end
             end
+        end
+      else
+        unless post_information.message == "" do
+          {:ok, post} = create_post(post_information)
+          create_tags(post_information.tags, post)
         end
       end
 

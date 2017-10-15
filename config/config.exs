@@ -29,6 +29,7 @@ config :ex_admin,
     SlackPosting.ExAdmin.Dashboard,
     SlackPosting.ExAdmin.Post,
     SlackPosting.ExAdmin.Comment,
+    SlackPosting.ExAdmin.Tag,
   ]
 
   ###
