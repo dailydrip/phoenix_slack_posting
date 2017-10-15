@@ -22,13 +22,13 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
-
 config :ex_admin,
   repo: SlackPosting.Repo,
-  module: SlackPosting,    # MyProject.Web for phoenix >= 1.3.0-rc
+  module: SlackPostingWeb,    # MyProject.Web for phoenix >= 1.3.0-rc
   modules: [
     SlackPosting.ExAdmin.Dashboard,
-    SlackPosting.ExAdmin.Post
+    SlackPosting.ExAdmin.Post,
+    SlackPosting.ExAdmin.Comment,
   ]
 
   ###

@@ -43,6 +43,8 @@ defmodule SlackPosting.Journals do
   """
   def get_post!(id), do: Repo.get!(Post, id)
 
+  def get_post_by_slack_id(id), do: Repo.get_by(Post, slack_id: id)
+
   @doc """
   Creates a post.
 

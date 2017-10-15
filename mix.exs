@@ -51,7 +51,8 @@ defmodule SlackPosting.Mixfile do
       {:hedwig_slack, github: "knewter/hedwig_slack", branch: "feature/add_private_data_to_messages"},
       {:distillery, "~> 1.5", runtime: false},
       {:plug, "~> 1.0"},
-      {:corsica, "~> 1.0"}
+      {:corsica, "~> 1.0"},
+      {:cachex, "~> 2.1"},
     ]
   end
 

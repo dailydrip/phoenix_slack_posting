@@ -9,7 +9,9 @@ defmodule SlackPosting.MessageParser do
       user_slack_id: user_slack_id,
       user_name: user_name,
       message: message,
-      tags: tags
+      tags: tags,
+      slack_id: get_private_msg(msg, "ts"),
+      in_reply_to_slack_id: get_private_msg(msg, "thread_ts")
     }
   end
 
@@ -28,8 +30,12 @@ defmodule SlackPosting.MessageParser do
 
   defp extract_msg(all_msg) do
     all_msg
-    |> hd
-    |> String.strip
+    |> hd()
+    |> String.trim()
   end
 
+  defp get_private_msg(%{private: %{msg: privmsg}}, key)do
+    privmsg[key]
+  end
+  defp get_private_msg(_, _), do: nil
 end

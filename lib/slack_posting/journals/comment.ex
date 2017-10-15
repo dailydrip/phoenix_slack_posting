@@ -16,6 +16,7 @@ defmodule SlackPosting.Journals.Comment do
   def changeset(%Comment{} = comment, attrs) do
     comment
     |> cast(attrs, [:text, :slack_id])
+    |> cast_assoc(:post, attrs[:post])
     |> validate_required([:text, :slack_id])
   end
 end
