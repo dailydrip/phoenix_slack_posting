@@ -38,11 +38,17 @@ defmodule SlackPosting.Robot do
                 {:ok, post} = create_post(original_post)
                 # then tag it
                 create_tags(post_information.tags, post)
+                # then create this comment
+                if post_information.message !== "" do
+                  {:ok, _comment} = create_comment(post, post_information)
+                end
 
               # then create this comment
               post ->
                 create_tags(post_information.tags, post)
-                {:ok, _comment} = create_comment(post, post_information)
+                if post_information.message !== "" do
+                  {:ok, _comment} = create_comment(post, post_information)
+                end
             end
         end
       end
@@ -74,7 +80,7 @@ defmodule SlackPosting.Robot do
 
   def create_comment(post, comment_post_information) do
     Journals.create_comment(%{
-      text: comment_post_information.text,
+      text: comment_post_information.message,
       slack_id: comment_post_information.slack_id,
       post: post
     })
