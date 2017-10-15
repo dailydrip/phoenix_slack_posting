@@ -6,6 +6,7 @@ defmodule SlackPosting.Journals.Post do
   schema "posts" do
     field :user_slack_id, :string
     field :user_name, :string
+    field :slack_id, :string
     field :text, :string
     many_to_many :tags, SlackPosting.Journals.Tag, join_through: SlackPosting.Journals.PostTag
     has_many :comments, SlackPosting.Journals.Comment
@@ -16,7 +17,7 @@ defmodule SlackPosting.Journals.Post do
   @doc false
   def changeset(%Post{} = post, attrs) do
     post
-    |> cast(attrs, [:text, :user_slack_id, :user_name])
-    |> validate_required([:text, :user_slack_id])
+    |> cast(attrs, [:text, :user_slack_id, :user_name, :slack_id])
+    |> validate_required([:text, :user_slack_id, :slack_id])
   end
 end

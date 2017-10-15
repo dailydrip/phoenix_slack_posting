@@ -1,13 +1,13 @@
 defmodule SlackPosting.Journals.Comment do
   use Ecto.Schema
   import Ecto.Changeset
-  alias SlackPosting.Journals.Comment
+  alias SlackPosting.Journals.{Comment, Post}
 
 
   schema "comments" do
     field :slack_id, :string
     field :text, :string
-    field :post_id, :id
+    belongs_to :post, Post
 
     timestamps()
   end
@@ -17,5 +17,6 @@ defmodule SlackPosting.Journals.Comment do
     comment
     |> cast(attrs, [:text, :slack_id])
     |> validate_required([:text, :slack_id])
+    |> put_assoc(:post, attrs[:post])
   end
 end
